@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const shippingCompanySchema = new mongoose.Schema({
   company_id: {
@@ -14,4 +14,4 @@ const shippingCompanySchema = new mongoose.Schema({
 });
 
 const ShippingCompany = mongoose.model('ShippingCompany', shippingCompanySchema);
-module.exports = ShippingCompany;
+export default ShippingCompany;

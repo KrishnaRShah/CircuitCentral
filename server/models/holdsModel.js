@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const holdsSchema = new mongoose.Schema({
   item_number: {
@@ -14,4 +14,4 @@ const holdsSchema = new mongoose.Schema({
 });
 
 const Holds = mongoose.model('Holds', holdsSchema);
-module.exports = Holds;
+export default Holds;

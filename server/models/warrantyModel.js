@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const warrantySchema = new mongoose.Schema({
   item_num: {
@@ -23,4 +23,4 @@ const warrantySchema = new mongoose.Schema({
 });
 
 const Warranty = mongoose.model('Warranty', warrantySchema);
-module.exports = Warranty;
+export default Warranty;

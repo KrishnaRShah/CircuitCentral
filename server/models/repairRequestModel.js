@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const repairRequestSchema = new mongoose.Schema({
   request_id: {
@@ -35,4 +35,4 @@ const repairRequestSchema = new mongoose.Schema({
 });
 
 const RepairRequest = mongoose.model('RepairRequest', repairRequestSchema);
-module.exports = RepairRequest;
+export default RepairRequest;

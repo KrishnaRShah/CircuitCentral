@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const storeOwnerSchema = new mongoose.Schema({
   unique_id: {
@@ -25,4 +25,4 @@ const storeOwnerSchema = new mongoose.Schema({
 });
 
 const StoreOwner = mongoose.model('StoreOwner', storeOwnerSchema);
-module.exports = StoreOwner;
+export default StoreOwner;
