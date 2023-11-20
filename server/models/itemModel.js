@@ -11,6 +11,10 @@ const itemSchema = new mongoose.Schema({
   },
   item_description: {
     type: String,
+    maxlength: 2000
+  },
+  item_name: {
+    type: String,
     maxlength: 200
   },
   type: {

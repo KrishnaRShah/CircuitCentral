@@ -48,16 +48,6 @@ export const deleteWarranty = async (req, res) => {
   res.json({ message: "Warranty deleted successfully." });
 }
 
-export const getWarrantyByWarrantyId = async (req, res) => {
-  const { warranty_id } = req.params;
-  try {
-    const warranty = await Warranty.findOne({ warranty_id: warranty_id });
-    res.status(200).json(warranty);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
-}
-
 export const getWarrantyByItem = async (req, res) => {
   const { item_num } = req.params;
   try {

@@ -3,6 +3,12 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import cors from "cors";
 import customerRouter from "./routes/customerRouter.js";
+import storeRouter from "./routes/storeRouter.js";
+import storeOwnerRouter from "./routes/storeOwnerRouter.js";
+import shippingCompanyRouter from "./routes/shippingCompanyRouter.js";
+import itemRouter from "./routes/itemRouter.js";
+import holdsRouter from "./routes/holdsRouter.js";
+import warrantyRouter from "./routes/warrantyRouter.js";
 
 const app = express();
 app.use(bodyParser.json({ limit: "30mb", extended: true }))
@@ -25,3 +31,11 @@ mongoose
 
 app
   .use('/customer', customerRouter)
+  .use('/store', storeRouter)
+  .use('/storeOwner', storeOwnerRouter)
+  .use('/shippingCompany', shippingCompanyRouter)
+  .use('/item', itemRouter)
+  .use('/hold', holdsRouter)
+  .use('/warranty', warrantyRouter);
+
+  // TODO: remove all id's from the database and replace them with _id's

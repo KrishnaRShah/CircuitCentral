@@ -1,4 +1,3 @@
-import e from 'cors';
 import Store from '../models/storeModel.js';
 import mongoose from 'mongoose';
 
@@ -51,7 +50,7 @@ export const deleteStore = async (req, res) => {
 export const getShippingCompany = async (req, res) => {
   const { id } = req.params;
   try {
-    const store = await Store.findById(id);
+    const store = await Store.findById(id).populate('shipping_company');
     const shipping_company = store.shipping_company;
     res.status(200).json(shipping_company);
   } catch (error) {
@@ -62,7 +61,7 @@ export const getShippingCompany = async (req, res) => {
 export const getStoreOwner = async (req, res) => {
   const { id } = req.params;
   try {
-    const store = await Store.findById(id);
+    const store = await Store.findById(id).populate('store_owner');
     const store_owner = store.store_owner;
     res.status(200).json(store_owner);
   } catch (error) {

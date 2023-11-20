@@ -47,7 +47,7 @@ export const deleteStoreOwner = async (req, res) => {
   res.json({ message: "Store owner deleted successfully." });
 }
 
-export const loginStoreOwnder = async (req, res) => {
+export const loginStoreOwner = async (req, res) => {
   const { email, password } = req.body;
   try {
     const owner = await StoreOwner.findOne({ email, password });
@@ -58,30 +58,3 @@ export const loginStoreOwnder = async (req, res) => {
   }
 }
 
-export const addStoretoStoreOwner = async (req, res) => {
-  const { id } = req.params;
-  const { store } = req.body;
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No store owner with id: ${id}`);
-  const updatedStoreOwner = { store, _id: id };
-  await StoreOwner.findByIdAndUpdate(id, updatedStoreOwner, { new: true });
-  res.json(updatedStoreOwner);
-}
-
-export const removeStorefromStoreOwner = async (req, res) => {
-  const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No store owner with id: ${id}`);
-  const updatedStoreOwner = { store: null, _id: id };
-  await StoreOwner.findByIdAndUpdate(id, updatedStoreOwner, { new: true });
-  res.json(updatedStoreOwner);
-}
-
-export const getStorefromStoreOwner = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const storeOwner = await StoreOwner.findById(id);
-    const store = await Store.findById(storeOwner.store);
-    res.status(200).json(store);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
-}
