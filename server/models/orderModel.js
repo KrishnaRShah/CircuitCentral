@@ -38,7 +38,12 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: true,
     maxlength: 300
-  }
+  },
+  status: {
+    type: String,
+    required: true,
+    maxlength: 100
+  },
 });
 
 const Order = mongoose.model('Order', orderSchema);

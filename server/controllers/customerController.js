@@ -51,6 +51,7 @@ export const loginCustomer = async (req, res) => {
   const { email, password } = req.body;
   try {
     const customer = await Customer.findOne({ email, password });
+    if (!customer) return res.status(404).json({ message: "Invalid login credentials." });
     res.status(200).json(customer);
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -72,6 +73,8 @@ export const getCustomerOrders = async (req, res) => {
   const { id } = req.params;
   try {
     const customer = await Customer.findById(id);
+    if (!customer) return res.status(404).json({ message: `No customer with id: ${id}` });
+    if (!customer.orders) return res.status(404).json({ message: "No orders for that customer." });
     res.status(200).json(customer.orders);
   } catch (error) {
     res.status(404).json({ message: error.message });

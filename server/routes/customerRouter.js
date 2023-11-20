@@ -13,15 +13,16 @@ import {
 } from "../controllers/customerController.js";
 
 const router = express.Router();
-router.get("/all", getCustomers)
-  .get("/:id", getCustomer)
-  .post("/", createCustomer)
-  .put("/:id", updateCustomer)
-  .delete("/:id", deleteCustomer)
+router
+  .get("/all", getCustomers)
   .get("/login", loginCustomer)
   .get("/register", registerCustomer)
-  .get("/orders", getCustomerOrders)
+  .get("/:id", getCustomer)
+  .get("/:id/orders", getCustomerOrders)
+  .post("/", createCustomer)
   .post("/orders", addOrderToCustomer)
-  .delete("/orders/:id", deleteOrderFromCustomer);
+  .put("/:id", updateCustomer)
+  .delete("/orders/:id", deleteOrderFromCustomer)
+  .delete("/:id", deleteCustomer);
 
 export default router;
