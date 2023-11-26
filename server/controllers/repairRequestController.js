@@ -75,3 +75,13 @@ export const getRepairRequestByItem = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 }
+
+export async function getRepairRequestByStore(req, res) {
+  const { store_number } = req.params;
+  try {
+    const repairRequests = await RepairRequest.find({ store_number });
+    res.status(200).json(repairRequests);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+}
