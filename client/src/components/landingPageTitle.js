@@ -1,11 +1,6 @@
 import React from "react";
 import { Typography } from "@mui/material";
 
-/**
- * This is the title component of the landing page
- * @returns {JSX.Element}
- * @constructor
- */
 export function LandingPageTitle() {
   const title = "Empower Your Build";
   const subtitle = ["Join", "Circuit Central", "today."];

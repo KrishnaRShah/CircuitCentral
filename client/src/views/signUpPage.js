@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
@@ -13,6 +13,7 @@ import GradientButton from "../components/gradientButton.js";
 import { OneIconTextField } from "../components/oneIconTextField.js";
 import { FirstLastNameFields } from "../components/firstLastNameFields.js";
 import { PasswordTextField } from "../components/showPassword.js";
+import TextWithLink from "../components/textWithLink.js";
 
 const initialValues = {
   first_name: "",
@@ -24,6 +25,8 @@ const initialValues = {
 };
 
 const RegisterPage = () => {
+  const [linkClicked, setLinkClicked] = useState(false);
+
   const formValidation = Yup.object({
     first_name: Yup.string()
       .required("Please enter your first name.")
@@ -98,6 +101,11 @@ const RegisterPage = () => {
     },
   });
 
+  useEffect(() => {
+    if (linkClicked) {
+      window.location.href = "/signup";
+    }
+  }, [linkClicked]);
   return (
     <Box
       sx={{
@@ -268,25 +276,11 @@ const RegisterPage = () => {
             mx: "auto",
           }}
         />
-
-        <Typography
-          variant="body2"
-          color="textSecondary"
-          align="center"
-          sx={{
-            padding: "10px",
-            color: "#8e8e8e",
-            "& a": {
-              color: "#1b4965",
-              fontWeight: "600",
-              "&:hover": {
-                textDecoration: "underline",
-              },
-            },
-          }}
-        >
-          Already have an account? <Link to="/login">Log in</Link>
-        </Typography>
+        <TextWithLink
+          text="Already have an account?"
+          link={<Link to="/login">Log in</Link>}
+          onClick={() => setLinkClicked(true)}
+        />
       </Container>
     </Box>
   );
