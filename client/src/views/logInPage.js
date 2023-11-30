@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
 import LockOutlined from "@mui/icons-material/LockOutlined";
@@ -8,41 +8,50 @@ import EmailOutlined from "@mui/icons-material/EmailOutlined";
 import GradientButton from "../components/gradientButton.js";
 import { OneIconTextField } from "../components/oneIconTextField.js";
 import { PasswordTextField } from "../components/showPassword.js";
+import { Link } from "react-router-dom";
+import TextWithLink from '../components/textWithLink.js';
 
 const initialValues = {
-    email: "",
-    password: "",
+  email: "",
+  password: "",
 };
 
 const LoginPage = () => {
-
-  const [loginMessage, setloginMessage] = useState("Please Login");
+  const [loginMessage, setLoginMessage] = useState("");
+  const [linkClicked, setLinkClicked] = useState(false);
 
   const { touched, errors, handleSubmit, handleChange, values } = useFormik({
     initialValues: initialValues,
     onSubmit: async (values) => {
-      axios
-        //either display "incorrect email/password" or "re-route to store main page"
-        .get("http://localhost:3001/customer/login", {
+      try {
+        const result = await axios.get("http://localhost:3001/customer/login", {
           params: {
             email: values.email,
-            password: values.password
-          }
-        })
-        .then(function (result) {
-          if (result.status === 200) {
-            setloginMessage("Success!");
-            window.location.href = "/main";            
-          }
-        })
-        .catch((err) => {
-          setloginMessage("Log in failed, please double check your credentials, then try again");
-          if (err.res) {             
-            console.log(err.res.data);
-          }
+            password: values.password,
+          },
         });
+
+        if (result.status === 200) {
+          setLoginMessage("Success!");
+          // Redirect to the main page upon successful login
+          window.location.href = "/main";
+        }
+      } catch (err) {
+        setLoginMessage(
+          "Log in failed, please double check your credentials, then try again"
+        );
+        if (err.response) {
+          console.log(err.response.data);
+        }
+      }
     },
   });
+
+  useEffect(() => {
+    if (linkClicked) {
+      window.location.href = "/signup";
+    }
+  }, [linkClicked]);
 
   return (
     <Box
@@ -113,7 +122,7 @@ const LoginPage = () => {
             },
           }}
         >
-          Create an account
+          Sign In
         </Typography>
 
         <form
@@ -129,31 +138,33 @@ const LoginPage = () => {
             borderRadius: "1rem",
           }}
         >
-            <OneIconTextField
-                fieldColor={"#1b4965"}
-                name={"email"}
-                label={"Email"}
-                value={values.email}
-                onChange={handleChange}
-                error={touched.email && Boolean(errors.email)}
-                helperText={touched.email && errors.email}
-                icon={<EmailOutlined />}
-            />
+          <OneIconTextField
+            fieldColor={"#1b4965"}
+            name={"email"}
+            label={"Email"}
+            value={values.email}
+            onChange={handleChange}
+            error={touched.email && Boolean(errors.email)}
+            helperText={touched.email && errors.email}
+            icon={<EmailOutlined />}
+          />
 
-            <PasswordTextField
-                id="password"
-                label="Password"
-                value={values.password}
-                onChange={handleChange}
-                error={touched.password && Boolean(errors.password)}
-                helperText={touched.password && errors.password}
-                icon={<LockOutlined />}
-            />
+          <PasswordTextField
+            id="password"
+            label="Password"
+            value={values.password}
+            onChange={handleChange}
+            error={touched.password && Boolean(errors.password)}
+            helperText={touched.password && errors.password}
+            icon={<LockOutlined />}
+          />
 
-            <div>
-              {loginMessage}
-            </div>
-
+          <div>{loginMessage}</div>
+          <TextWithLink
+            text="Don't have an account?"
+            link={<Link to="/signup">Log in</Link>}
+            onClick={() => setLinkClicked(true)}
+          />
           <GradientButton
             degree="65deg"
             gradientColors={["#94d2bd", "#0a9396", "#1b4965"]}
