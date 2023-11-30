@@ -79,7 +79,6 @@ export const getItemByName = async (req, res) => {
   try {
     const items = await Item.find({
       item_name: { $regex: keyword, $options: 'i' },
-      OrderNumber: null
     })
 
     res.status(200).json(items);
