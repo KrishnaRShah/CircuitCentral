@@ -48,7 +48,7 @@ export const deleteCustomer = async (req, res) => {
 }
 
 export const loginCustomer = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = req.query;
   try {
     const customer = await Customer.findOne({ email, password });
     if (!customer) return res.status(404).json({ message: "Invalid login credentials." });

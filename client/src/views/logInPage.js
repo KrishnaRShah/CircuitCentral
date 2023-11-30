@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import { useFormik } from "formik";
 import axios from "axios";
 import LockOutlined from "@mui/icons-material/LockOutlined";
-import { Container, Divider, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import EmailOutlined from "@mui/icons-material/EmailOutlined";
 import GradientButton from "../components/gradientButton.js";
@@ -16,29 +16,31 @@ const initialValues = {
 
 const LoginPage = () => {
 
+  const [loginMessage, setloginMessage] = useState("Please Login");
+
   const { touched, errors, handleSubmit, handleChange, values } = useFormik({
     initialValues: initialValues,
-
     onSubmit: async (values) => {
-        const data = {
+      axios
+        //either display "incorrect email/password" or "re-route to store main page"
+        .get("http://localhost:3001/customer/login", {
+          params: {
             email: values.email,
-            password: values.password,
-        };
-        
-        axios
-            //will finish when front-end + back-end is connected
-            //either display "incorrect email/password" or "re-route to store main page"
-            .get("http://localhost:3001/customer/login", data)
-            .then(function (result) {
-            if (result.status === 200) {
-                console.log("worked!")
-            }
-            })
-            .catch((err) => {
-            if (err.res) {
-                console.log(err.res.data);
-            }
-            });
+            password: values.password
+          }
+        })
+        .then(function (result) {
+          if (result.status === 200) {
+            setloginMessage("Success!");
+            window.location.href = "/main";            
+          }
+        })
+        .catch((err) => {
+          setloginMessage("Log in failed, please double check your credentials, then try again");
+          if (err.res) {             
+            console.log(err.res.data);
+          }
+        });
     },
   });
 
@@ -147,6 +149,10 @@ const LoginPage = () => {
                 helperText={touched.password && errors.password}
                 icon={<LockOutlined />}
             />
+
+            <div>
+              {loginMessage}
+            </div>
 
           <GradientButton
             degree="65deg"
