@@ -26,17 +26,12 @@ const SearchBar = () => {
       maxWidth="sm"
       sx={{
         borderColor: '#006d77',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '100%',
+        width: '300px',
+        height: '100px',
         borderRadius: '1rem',
         margin: '0 auto',
-        padding: '2rem',
+        padding: '22px',
         background: '#edf6f9',
-        boxShadow: '0px 0px 1px 1px #bdbdbd',
       }}
     >
       <OneIconTextField
