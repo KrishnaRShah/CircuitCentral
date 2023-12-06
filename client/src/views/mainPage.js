@@ -7,6 +7,7 @@ import { Typography } from "@mui/material";
 const MainPage = () => {
   const [items, setItems] = useState([]);
   const [types, setTypes] = useState([]);
+  const [selectedType, setSelectedType] = useState(null);
 
   const fetchItemData = () => {
     fetch("http://localhost:3001/item/all")
@@ -19,6 +20,10 @@ const MainPage = () => {
         const uniqueTypes = [...new Set(data.map((a) => a.type))];
         setTypes(uniqueTypes);
       });
+  };
+
+  const handleTypeChange = (event) => {
+    setSelectedType(event.target.value);
   };
 
   useEffect(() => {
@@ -101,26 +106,34 @@ const MainPage = () => {
           id="main-body"
           style={{ gridColumn: "2", gridRow: "2" }}
         >
+          {/* TODO: make filter into dropdown menu
+          <DropdownMenu
+            items={items}
+            handleMonitorOption={handleMonitorOption}
+            handleMouseOption={handleMouseOption}
+            handleKeyboardOption={handleKeyboardOption}
+          /> */}
           <div id="main-body-filter">
-            <select>
+            <select onChange={handleTypeChange}>
               {types
                 ? types.map((type) => {
-                    return <option key={type}>{type}</option>;
+                    return <option value={type}>{type}</option>;
                   })
                 : null}
             </select>
           </div>
-
-          {items.map((item, index) => (
-            <div className="item-body" key={index}>
-              <div style={{ color: "#006d77", fontWeight: "bold" }}>
-                {item.item_name}
+          {items
+            .filter((item) => !selectedType || item.type === selectedType)
+            .map((item, index) => (
+              <div className="item-body" key={index}>
+                <div style={{ color: "#006d77", fontWeight: "bold" }}>
+                  {item.item_name}
+                </div>
+                <div style={{ color: "#006d77", fontWeight: "bold" }}>
+                  Price: ${item.item_price}
+                </div>
               </div>
-              <div style={{ color: "#006d77", fontWeight: "bold" }}>
-                Price: ${item.item_price}
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </Box>

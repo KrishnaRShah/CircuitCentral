@@ -31,7 +31,7 @@
 .nav-menu {
   display: flex;
   align-items: center;
-  width: 55%;
+  width: 90%;
   height: 100px;
   background-color: #edf6f9;
   border-bottom: 1px solid lightblue;
@@ -55,10 +55,6 @@
   border-color: #b9c0c2;
   background-color: #edf6f9;
   font-size: 15px; 
-}
-
-.search-bar{
-
 }
 
 .main-body{
