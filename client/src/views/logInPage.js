@@ -162,7 +162,7 @@ const LoginPage = () => {
           <div>{loginMessage}</div>
           <TextWithLink
             text="Don't have an account?"
-            link={<Link to="/signup">Log in</Link>}
+            link={<Link to="/signup">Register now!</Link>}
             onClick={() => setLinkClicked(true)}
           />
           <GradientButton

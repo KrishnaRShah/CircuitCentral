@@ -18,7 +18,7 @@ const SearchBarResults = ({ filteredItems }) => {
             margin: '0 auto',
             padding: '1rem',
             background: '#edf6f9',
-            boxShadow: '0px 0px 1px 1px #bdbdbd',
+            boxShadow: '0px 0px 10px 2px #bdbdbd',
           }}
         >
           {filteredItems.map((item, index) => (

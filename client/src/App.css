@@ -31,12 +31,11 @@
 .nav-menu {
   display: flex;
   align-items: center;
-  width: 75%;
+  width: 55%;
   height: 100px;
   background-color: #edf6f9;
   border-bottom: 1px solid lightblue;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-radius: 10px;
 }
 
 .company-logo{
@@ -86,7 +85,31 @@
   border-radius:  10px;
 }
 
+.sidebar-body{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100px;
+  height: 600px;
+  background-color: #edf6f9;
+  border-radius: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 
+/* .sidebar-row{
+  display: flex;
+  margin: 10px;
+  padding: 1px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+} */
+
+.nav-link {
+  text-decoration: none;
+}
 
 @keyframes App-logo-spin {
   from {

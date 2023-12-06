@@ -13,7 +13,9 @@ const SearchBar = () => {
   };
 
   useEffect(() => {
-    if (searchTerm.length > 0) {
+    if (searchTerm.length === 0) {
+      setFilteredItems([]);
+    } else {
       fetch(`http://localhost:3001/item/description?keyword=${searchTerm}`)
         .then((response) => response.json())
         .then((data) => setFilteredItems(data))
@@ -26,7 +28,7 @@ const SearchBar = () => {
       maxWidth="sm"
       sx={{
         borderColor: '#006d77',
-        width: '300px',
+        width: '700px',
         height: '100px',
         borderRadius: '1rem',
         margin: '0 auto',
