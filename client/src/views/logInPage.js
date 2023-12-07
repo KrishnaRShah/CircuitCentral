@@ -33,7 +33,8 @@ const LoginPage = () => {
 
         if (result.status === 200) {
           setLoginMessage("Success!");
-          // Redirect to the main page upon successful login
+          localStorage.setItem("customer", JSON.stringify(result.data));
+          console.log(JSON.stringify(result.data));
           window.location.href = "/main";
         }
       } catch (err) {

@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import SearchBar from "../components/navigation/searchBar.js";
 import Sidebar from "../components/navigation/sideBar.js";
-import { Typography } from "@mui/material";
+import { Typography, Divider } from "@mui/material";
 
 const MainPage = () => {
   const [items, setItems] = useState([]);
   const [types, setTypes] = useState([]);
   const [selectedType, setSelectedType] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
+  //TODO: add current cart of customer to the nav bar using this:
+  //const [customer, setCustomer] = useState(JSON.parse(localStorage.getItem("customer")));
 
   const fetchItemData = () => {
     fetch("http://localhost:3001/item/all")
@@ -113,27 +116,86 @@ const MainPage = () => {
             handleMouseOption={handleMouseOption}
             handleKeyboardOption={handleKeyboardOption}
           /> */}
-          <div id="main-body-filter">
-            <select onChange={handleTypeChange}>
-              {types
-                ? types.map((type) => {
-                    return <option value={type}>{type}</option>;
-                  })
-                : null}
-            </select>
+          <div
+            style={{
+              justifyContent: "center",
+              display: "flex",
+              flexDirection: "column",
+              gridColumn: "2",
+              gridRow: "2",
+            }}
+          >
+            <Divider
+              sx={{
+                mt: 1,
+                mb: 1,
+                width: "70%",
+                mx: "auto",
+              }}
+            />
+            <div id="main-body-filter">
+              <select onChange={handleTypeChange}>
+                {types
+                  ? types.map((type) => {
+                      return <option value={type}>{type}</option>;
+                    })
+                  : null}
+              </select>
+            </div>
+            <Divider
+              sx={{
+                mt: 1,
+                mb: 1,
+                width: "70%",
+                mx: "auto",
+              }}
+            />
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "center",
+              }}
+            >
+              {items
+                .filter((item) => !selectedType || item.type === selectedType)
+                .map((item, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      flexBasis: "30%",
+                      marginBottom: "10px",
+                      marginRight: "1%",
+                      textAlign: "center",
+                    }}
+                  >
+                    <button
+                      className="item-body"
+                      style={{
+                        width: "100%",
+                        background: "none",
+                        border: "1px solid #add8e6",
+                        cursor: "pointer",
+                        textAlign: "center",
+                      }}
+                      onClick={() => {
+                        setSelectedItem(item);
+                        localStorage.setItem("selectedItem", JSON.stringify(item)); // Store item directly
+                        console.log("Item clicked:", item.item_name);
+                        window.location.href = "/item";
+                      }}
+                    >
+                      <div style={{ color: "#006d77", fontWeight: "bold" }}>
+                        {item.item_name}
+                      </div>
+                      <div style={{ color: "#006d77", fontWeight: "bold" }}>
+                        Price: ${item.item_price}
+                      </div>
+                    </button>
+                  </div>
+                ))}
+            </div>
           </div>
-          {items
-            .filter((item) => !selectedType || item.type === selectedType)
-            .map((item, index) => (
-              <div className="item-body" key={index}>
-                <div style={{ color: "#006d77", fontWeight: "bold" }}>
-                  {item.item_name}
-                </div>
-                <div style={{ color: "#006d77", fontWeight: "bold" }}>
-                  Price: ${item.item_price}
-                </div>
-              </div>
-            ))}
         </div>
       </div>
     </Box>
