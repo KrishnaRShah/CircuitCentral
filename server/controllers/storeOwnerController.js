@@ -48,7 +48,7 @@ export const deleteStoreOwner = async (req, res) => {
 }
 
 export const loginStoreOwner = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = req.query;
   try {
     const owner = await StoreOwner.findOne({ email, password });
     if (!owner) return res.status(404).json({ message: "Invalid login credentials." });

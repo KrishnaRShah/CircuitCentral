@@ -142,6 +142,8 @@ export default function LandingPage() {
                                       onClick={() => setLinkClicked(true)}/>
                     </div>
                 </div>
+                <TextWithLink text="Store Owner?" link={<Link to="/owner-login">Store Owner Sign in</Link>}
+                                      onClick={() => setLinkClicked(true)}/>
             </div>
         </div>
     );
