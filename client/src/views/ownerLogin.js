@@ -30,7 +30,7 @@ const OwnerLogin = () => {
 
         if (result.status === 200) {
           setLoginMessage("Success!");
-          localStorage.setItem("owner", JSON.stringify(result.data));
+          localStorage.setItem("storeOwner", JSON.stringify(result.data));
           console.log(JSON.stringify(result.data));
           window.location.href = "/owner";
         }

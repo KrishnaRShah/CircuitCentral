@@ -3,16 +3,20 @@ import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 
 const OwnerProfilePage = () => {
-    const [orders, setOrders] = useState([]);
+    const [owner, setOwner] = useState();
   
-    const fetchRepairsData = async () => {
-      const response = await fetch("http://localhost:3001/repairRequest/all");
-      const data = await response.json();
-      setOrders(data);
+    const fetchOwnerData = async () => {
+      try {
+        const response = await fetch(`http://localhost:3001/storeOwner/${JSON.parse(localStorage.getItem("storeOwner"))._id}`);
+        const data = await response.json();
+        setOwner(data);
+      } catch (e) {
+        console.log(e);
+      }
     };
   
     useEffect(() => {
-        fetchRepairsData();
+        fetchOwnerData();
     }, []);
   
     return (
@@ -35,6 +39,39 @@ const OwnerProfilePage = () => {
             <OwnerSideBar />
           </div>
         </div>
+                <div style={{
+                    background: "#edf6f9",
+                    borderRadius: "25px",
+                    boxShadow: "0 3px 5px 2px rgba(0, 0, 0, .3)",
+                    display: "flex",
+                    width: "fit-content",
+                    padding: "50px",
+                    flexDirection: "column",
+                    justifyContent: "space-around",
+                    height: "fit-content",
+                }}>
+                      <h2>Store Owner Profile</h2>
+                      {owner ? (
+                        <div>
+                        <p>Email: {owner.email}</p>
+                        <p>Name: {owner.name}</p>
+                        <p>Password: {owner.password}</p>
+                        <p>Username: {owner.username}</p>
+                        <p>Unique_Id: {owner.unique_id}</p>
+                        <p>Id: {owner._id}</p>
+                        </div>
+                      ) : (
+                        <div>
+                        <p>Loading...</p>
+                        <p>Loading...</p>
+                        <p>Loading...</p>
+                        <p>Loading...</p>
+                        <p>Loading...</p>
+                        <p>Loading...</p>
+                        </div>
+                      )}
+                      
+            </div>
         </Box>
       );
 };

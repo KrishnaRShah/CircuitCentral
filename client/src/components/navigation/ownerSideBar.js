@@ -46,7 +46,7 @@ function OwnerSideBar() {
               // Clean up the local storage
               localStorage.clear();
               // see if user is truly logged out
-              if (localStorage.getItem("storeowner") === null) {
+              if (localStorage.getItem("storeOwner") === null) {
                 console.log("User logged out successfully");
               }
               window.location.href = "/";
