@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const holdsSchema = new mongoose.Schema({
+const cartSchema = new mongoose.Schema({
   item_number: {
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Item',
@@ -11,12 +11,16 @@ const holdsSchema = new mongoose.Schema({
     ref: 'Store',
     required: true
   },
+  customer_id: {
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Customer',
+    required: true
+  },
   quantity: {
     type: Number,
-    required: true,
-    min: 1
+    required: true
   }
 });
 
-const Holds = mongoose.model('Holds', holdsSchema);
-export default Holds;
+const Cart = mongoose.model('Cart', cartSchema);
+export default Cart;

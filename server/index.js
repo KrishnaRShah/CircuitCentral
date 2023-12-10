@@ -11,6 +11,7 @@ import holdsRouter from "./routes/holdsRouter.js";
 import warrantyRouter from "./routes/warrantyRouter.js";
 import orderRouter from "./routes/orderRouter.js";
 import repairRequestRouter from "./routes/repairRequestRouter.js";
+import cartRouter from "./routes/cartRouter.js";
 
 const app = express();
 app.use(bodyParser.json({ limit: "30mb", extended: true }))
@@ -40,6 +41,7 @@ app
   .use('/item', itemRouter)
   .use('/hold', holdsRouter)
   .use('/warranty', warrantyRouter)
-  .use('/repairRequest', repairRequestRouter);
+  .use('/repairRequest', repairRequestRouter)
+  .use('/cart', cartRouter);
 
   // TODO: remove all id's from the database and replace them with _id's

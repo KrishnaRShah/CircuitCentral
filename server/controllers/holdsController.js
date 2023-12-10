@@ -33,9 +33,9 @@ export const createHold = async (req, res) => {
 
 export const updateHold = async (req, res) => {
   const { id } = req.params;
-  const { item_number, store_number } = req.body;
+  const { item_number, store_number, quantity } = req.body;
   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No hold with id: ${id}`);
-  const updatedHold = { item_number, store_number, _id: id };
+  const updatedHold = { item_number, store_number, quantity, _id: id };
   await Holds.findByIdAndUpdate(id, updatedHold, { new: true });
   res.json(updatedHold);
 }
@@ -48,7 +48,7 @@ export const deleteHold = async (req, res) => {
 }
 
 export const getHoldByItemNumber = async (req, res) => {
-  const item_number = req.query.item_number;
+  const { item_number } = req.params;
   try {
     const holds = await Holds.find({
       item_number: item_number
@@ -60,9 +60,22 @@ export const getHoldByItemNumber = async (req, res) => {
 }
 
 export const getHoldByStoreNumber = async (req, res) => {
-  const store_number = req.query.store_number;
+  const { store_number } = req.params;
   try {
     const holds = await Holds.find({
+      store_number: store_number
+    })
+    res.status(200).json(holds);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+}
+
+export const getHoldByItemAndStoreNumber = async (req, res) => {
+  const { item_number, store_number } = req.params;
+  try {
+    const holds = await Holds.find({
+      item_number: item_number,
       store_number: store_number
     })
     res.status(200).json(holds);
