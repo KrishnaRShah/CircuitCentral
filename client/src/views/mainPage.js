@@ -65,7 +65,7 @@ const MainPage = () => {
         <div
           className="nav-menu"
           id="nav-menu"
-          style={{ gridColumn: "2", gridRow: "1", zIndex: "1" }}
+          style={{ gridColumn: "2", gridRow: "1", zIndex: "1", width: "77%" }}
         >
           <div className="company-logo" id="company-logo">
             <Typography
@@ -104,10 +104,11 @@ const MainPage = () => {
             <SearchBar />
           </div>{" "}
         </div>
+        <div style={{ padding: "1rem" }}></div>
         <div
           className="main-body"
           id="main-body"
-          style={{ gridColumn: "2", gridRow: "2" }}
+          style={{ gridColumn: "2", gridRow: "2",  }}
         >
           {/* TODO: make filter into dropdown menu
           <DropdownMenu
@@ -180,7 +181,7 @@ const MainPage = () => {
                       }}
                       onClick={() => {
                         setSelectedItem(item);
-                        localStorage.setItem("selectedItem", JSON.stringify(item)); // Store item directly
+                        localStorage.setItem("selectedItem", JSON.stringify(item)); 
                         console.log("Item clicked:", item.item_name);
                         window.location.href = "/item";
                       }}
@@ -197,6 +198,7 @@ const MainPage = () => {
             </div>
           </div>
         </div>
+        <div style={{ padding: "1rem" }}></div>
       </div>
     </Box>
   );

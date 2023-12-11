@@ -6,7 +6,6 @@ import {
   getCartByStore,
   createCart,
   changeQuantity,
-  removeFromCart,
   deleteCart,
 } from "../controllers/cartController.js";
 
@@ -19,6 +18,5 @@ router
   .post("/", createCart)
   .put("/quantity", changeQuantity)
   .delete("/all/:id", deleteCart)
-  .delete("/:id", removeFromCart);
 
 export default router;

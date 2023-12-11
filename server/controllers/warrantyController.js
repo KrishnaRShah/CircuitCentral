@@ -57,3 +57,13 @@ export const getWarrantyByItem = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 }
+
+export const getWarrantyByItemAndCustomer = async (req, res) => {
+  const { item_num, customer_id } = req.params;
+  try {
+    const warranty = await Warranty.findOne({ item_num: item_num, customer_id: customer_id });
+    res.status(200).json(warranty);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+}

@@ -12,6 +12,7 @@ import OwnerOrdersPage from './views/ownerOrdersPage.js';
 import OwnerRepairPage from './views/ownerRepairsPage.js';
 import OwnerProfilePage from './views/ownerProfilePage.js';
 import OwnerInventoryPage from './views/ownerInventoryPage.js';
+import CartPage from './views/cartPage.js';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/owner-repairs" element={<OwnerRepairPage /> } />
         <Route path="/owner-profile" element={<OwnerProfilePage /> } />
         <Route path="/owner-inventory" element={<OwnerInventoryPage /> } />
+        <Route path="/cart" element={<CartPage /> } />
         
       </Routes>
     </div>
