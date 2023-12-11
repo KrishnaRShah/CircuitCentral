@@ -21,6 +21,18 @@ export const getWarranty = async (req, res) => {
   }
 }
 
+export const getWarrantiesByCustomer = async (req, res) => {
+  const { customer_id } = req.params;
+  try {
+    const warranty = await Warranty.find({ customer_id });
+
+    console.log(warranty);
+    res.status(200).json(warranty);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+}
+
 export const createWarranty = async (req, res) => {
   const warranty = req.body;
   const newWarranty = new Warranty(warranty);

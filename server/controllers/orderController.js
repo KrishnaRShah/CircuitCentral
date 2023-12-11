@@ -20,6 +20,16 @@ export const getOrder = async (req, res) => {
   }
 }
 
+export const getOrdersByCustomer = async (req, res) => {
+  const { customer_id } = req.params;
+  try {
+    const order = await Order.find({ customer_id });
+    res.status(200).json(order);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+}
+
 export const createOrder = async (req, res) => {
   const order = req.body;
   const newOrder = new Order(order);

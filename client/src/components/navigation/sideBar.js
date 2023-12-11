@@ -18,23 +18,23 @@ function Sidebar() {
   return (
     <Container className="sidebar-body">
       <div className="sidebar-row">
-        <NavLink to="/home" className="nav-link">
+        <NavLink to="/user-home" className="nav-link">
           <SidebarRow Icon={HomeIcon} title="Home" />
         </NavLink>
 
-        <NavLink to={"/orders"} className="nav-link">
+        <NavLink to={"/user-orders"} className="nav-link">
           <SidebarRow Icon={CurrencyDollarIcon} title="Orders" />
         </NavLink>
 
-        <NavLink to={"/profile"} className="nav-link">
+        <NavLink to={"/user-profile"} className="nav-link">
           <SidebarRow Icon={UserIcon} title="Profile" />
         </NavLink>
 
-        <NavLink to={"/settings"} className="nav-link">
+        <NavLink to={"/user-settings"} className="nav-link">
           <SidebarRow Icon={AdjustmentsVerticalIcon} title="Settings" />
         </NavLink>
 
-        <NavLink to={"/repairrequests"} className="nav-link">
+        <NavLink to={"/user-repairrequests"} className="nav-link">
           <SidebarRow Icon={WrenchScrewdriverIcon} title="Repairs" />
         </NavLink>
 
