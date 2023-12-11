@@ -2,6 +2,7 @@ import express from "express";
 import {
   getOrders,
   getOrder,
+  getOrdersByCustomer,
   createOrder,
   updateOrder,
   deleteOrder,
@@ -15,6 +16,7 @@ const router = express.Router();
 router
   .get("/all", getOrders)
   .get("/:id", getOrder)
+  .get("/customer/:customer_id", getOrdersByCustomer)
   .get("/:id/items", getItems)
   .post("/", createOrder)
   .post("/:id/items", addItem)

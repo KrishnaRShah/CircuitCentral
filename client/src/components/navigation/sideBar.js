@@ -22,11 +22,11 @@ function Sidebar() {
           <SidebarRow Icon={HomeIcon} title="Home" />
         </NavLink>
 
-        <NavLink to={"/orders"} className="nav-link">
+        <NavLink to={"/user-orders"} className="nav-link">
           <SidebarRow Icon={CurrencyDollarIcon} title="Orders" />
         </NavLink>
 
-        <NavLink to={"/profile"} className="nav-link">
+        <NavLink to={"/user-profile"} className="nav-link">
           <SidebarRow Icon={UserIcon} title="Profile" />
         </NavLink>
 
@@ -34,7 +34,7 @@ function Sidebar() {
           <SidebarRow Icon={ShoppingCartIcon} title="Cart" />
         </NavLink>
 
-        <NavLink to={"/repairrequests"} className="nav-link">
+        <NavLink to={"/user-repairrequests"} className="nav-link">
           <SidebarRow Icon={WrenchScrewdriverIcon} title="Repairs" />
         </NavLink>
 
