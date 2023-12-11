@@ -148,9 +148,11 @@ const CartPage = () => {
             >
               {items.map((item, index) => {
                 console.log("warrantyInfo: ", warrantyInfo);
-                const warrantyForItem = warrantyInfo.find(
+                const warrantyForItem = warrantyInfo
+                .filter((warranty) => warranty !== null)
+                .find(
                   (warranty) =>
-                    warranty.item_num === cartData[index].item_number
+                    cartData[index].item_number === warranty.item_num
                 );
                 const warrantyIdForItem = warrantyForItem
                   ? warrantyForItem._id

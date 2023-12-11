@@ -9,6 +9,7 @@ import {
 import axios from "axios";
 import WarrantyOption from "./warrantyOption";
 import cuid from "cuid";
+import e from "cors";
 
 const AddToCart = ({ item }) => {
   const [storeNumbers, setStoreNumbers] = useState([]);
@@ -108,7 +109,7 @@ const AddToCart = ({ item }) => {
         console.error("Error adding to cart:", error);
       });
 
-    if (warrantyYears) {
+    if (warrantyYears && warrantyYears !== "") {
       const warranty_id = cuid();
       axios
         .post(`http://localhost:3001/warranty`, {
@@ -125,8 +126,9 @@ const AddToCart = ({ item }) => {
         .catch((error) => {
           console.error("Error creating warranty: ", error);
         });
+    } else {
+      window.location.reload();
     }
-    window.location.reload();
   };
 
   return (
@@ -143,8 +145,7 @@ const AddToCart = ({ item }) => {
           <MenuItem value="" style={{ color: "#006d77", fontWeight: "normal" }}>
             <em>None</em>
           </MenuItem>
-          {storeNumbers
-          .map((store) => (
+          {storeNumbers.map((store) => (
             <MenuItem
               key={store._id}
               value={store._id}
@@ -189,7 +190,7 @@ const AddToCart = ({ item }) => {
           ))}
         </Select>
       </FormControl>
-      <WarrantyOption disabled={!selectedStore || !quantity}/>
+      <WarrantyOption disabled={!selectedStore || !quantity} />
       <Button
         variant="outlined"
         disabled={!selectedStore || !quantity}
