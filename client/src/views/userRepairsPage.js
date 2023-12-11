@@ -2,6 +2,8 @@ import Sidebar from "../components/navigation/sideBar";
 import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import { DateTime } from "luxon";
+import { addYears, parseISO } from 'date-fns';
+import axios from "axios";
 
 const UserRepairsPage = () => {
     const [CustomerRepairs, setCustomerRepairs] = useState([]);
@@ -21,19 +23,42 @@ const UserRepairsPage = () => {
     };
 
     const fetchCustomerWarranties = async () => {
-        //Need to change to just fetch by customer id
-        //const response = await fetch(`http://localhost:3001/warranty/customer/${JSON.parse(localStorage.getItem("customer"))._id}`);
-        const response = await fetch(`http://localhost:3001/warranty/all`);
+        const response = await fetch(`http://localhost:3001/warranty/customer/${JSON.parse(localStorage.getItem("customer"))._id}`);
+        const data = await response.json();     
+        const filteredWarranties = data.filter((obj) => addYears(parseISO(obj.activation_date), obj.length) > new Date());
+        setCustomerWarranties(filteredWarranties);
+    };
+
+    const createRepairRequest = async (warranty) => {
+      const newRepairRequestData = {
+        request_id: warranty.customer_id + Math.floor(Math.random() * 1000),
+        status: "processing",
+        estimated_cost: Math.floor(Math.random() * 50),
+        date: new Date(),
+        store_number: "6574c6a5d54bd56b7fe830f1",
+        customer_id: warranty.customer_id,
+        item_id: warranty.item_num,
+        warranty_check: "true",
+      };
+
+      axios
+        .post("http://localhost:3001/repairrequest/", newRepairRequestData)
+        .then(function (result) {
+          if (result.status === 200) {
+            console.log(result);
+          }
+        })
+        .catch((err) => {
+          if (err.res) {
+            console.log(err.res.data);
+          }
+        });
+      
+        const response = await fetch(`http://localhost:3001/warranty/${warranty._id}`, {method: 'DELETE'});
         const data = await response.json();
 
-        const filteredCustomerWarranties = data.filter(function (w) {
-            return w.customer_id == JSON.parse(localStorage.getItem("customer"))._id;
-        });
-
-        
-        setCustomerWarranties(filteredCustomerWarranties);
-
-        console.log(data);
+        fetchCustomerRepairsData();
+        fetchCustomerWarranties();
     };
   
     useEffect(() => {
@@ -118,6 +143,40 @@ const UserRepairsPage = () => {
                                     <td style={cellStyle}>{DateTime.fromISO(r.date).toFormat('yyyy/MM/dd')}</td>
                                     <td style={cellStyle}>{r.store_number}</td>                                                             
                                     <td style={cellStyle}>{r.warranty_check}</td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        ) : (
+                          <p>Loading...</p>
+                        )}
+
+                        <h2>Customer Available Warranties</h2>
+                        { CustomerWarranties ? (
+                          <div>
+                            <table style={tableStyle}>
+                              <thead>
+                                <tr>
+                                  <th style={headerCellStyle}>Warranty Id</th>
+                                  <th style={headerCellStyle}>Customer Name</th>
+                                  <th style={headerCellStyle}>Item Number</th>
+                                 {/* <th style={headerCellStyle}>Item Name</th> */}
+                                  <th style={headerCellStyle}>Activation Date</th>                              
+                                  <th style={headerCellStyle}>Warranty Length</th>
+                                  <th style={headerCellStyle}>Submit Repair Request?</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {CustomerWarranties.map(warranty => (
+                                  <tr key={warranty._id}>
+                                    <td style={cellStyle}>{warranty.warranty_id}</td>
+                                    <td style={cellStyle}>{JSON.parse(localStorage.getItem("customer")).name}</td>
+                                    <td style={cellStyle}>{warranty.item_num}</td>
+                                    {/* <td style={cellStyle}>{items.find(obj => {return obj._id === r.item_id}).item_name}</td> */}
+                                    <td style={cellStyle}>{DateTime.fromISO(warranty.activation_date).toFormat('yyyy/MM/dd')}</td>
+                                    <td style={cellStyle}>{warranty.length + " years"}</td>
+                                    <td style={cellStyle}><button onClick={() => createRepairRequest(warranty)}>Create Repair Request</button></td>                                   
                                   </tr>
                                 ))}
                               </tbody>

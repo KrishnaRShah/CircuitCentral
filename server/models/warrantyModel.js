@@ -6,6 +6,11 @@ const warrantySchema = new mongoose.Schema({
     ref: 'Item',
     required: true
   },
+  customer_id:{
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Customer',
+    required: true
+  },
   warranty_id: {
     type: String,
     required: true,
@@ -16,9 +21,8 @@ const warrantySchema = new mongoose.Schema({
     required: true
   },
   length: {
-    type: String,
-    required: true,
-    maxlength: 100
+    type: Number,
+    required: true
   }
 });
 

@@ -41,13 +41,10 @@ function OwnerSideBar() {
 
         <LogoutButton
           onClick={() => {
-            // get the current user and logout
             if (window.confirm("Are you sure you want to logout?")) {
-              // Clean up the local storage
               localStorage.clear();
-              // see if user is truly logged out
-              if (localStorage.getItem("storeOwner") === null) {
-                console.log("User logged out successfully");
+              if (localStorage.getItem("owner") === null) {
+                console.log("Owner logged out successfully");
               }
               window.location.href = "/";
             }

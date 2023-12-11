@@ -3,19 +3,31 @@ import { Box } from "@mui/system";
 import SearchBar from "../components/navigation/searchBar.js";
 import Sidebar from "../components/navigation/sideBar.js";
 import { Typography, Divider } from "@mui/material";
+import AddToCart from "../components/menu/addToCart.js";
 
 const ItemPage = () => {
   const [item, setItem] = useState(null);
+  const [similarItems, setSimilarItems] = useState([null]);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     const storedItem = JSON.parse(localStorage.getItem("selectedItem"));
     setItem(storedItem);
-    if (storedItem && storedItem._id) {
-        fetch(`http://localhost:3001/item/${storedItem._id}`)
+
+    const fetchItemData = () => {
+      if (storedItem && storedItem.type) {
+        fetch(`http://localhost:3001/item/type?keyword=${storedItem.type}`)
           .then((response) => response.json())
-          .then((data) => setItem(data))
-          .catch((error) => console.error(error));
-      } else {
+          .then((data) => setSimilarItems(data));
+      }
+    };
+    if (storedItem && storedItem._id) {
+      fetch(`http://localhost:3001/item/${storedItem._id}`)
+        .then((response) => response.json())
+        .then((data) => setItem(data));
+
+      fetchItemData();
+    } else {
       console.log("No item in local storage");
     }
   }, []);
@@ -91,6 +103,7 @@ const ItemPage = () => {
             <SearchBar />
           </div>{" "}
         </div>
+        <div style={{ padding: "1rem" }}></div>
         <div
           className="main-body"
           id="main-body"
@@ -105,9 +118,10 @@ const ItemPage = () => {
               gridRow: "2",
             }}
           >
-            <button onClick={() => 
-              //TODO: ADD TO CART
-              console.log(item)}>Add to Cart</button>
+            <div style={{ padding: "10px" }}></div>
+
+            <AddToCart item={item} />
+            <div style={{ padding: "10px" }}></div>
 
             <Divider
               sx={{
@@ -118,16 +132,124 @@ const ItemPage = () => {
               }}
             />
             {item && (
-              <div style={{ textAlign: "center" }}>
-                <Typography variant="h4">{item.item_name}</Typography>
-                <Typography variant="body1">
+              <div
+                style={{
+                  textAlign: "center",
+                  color: "#006d77",
+                  fontWeight: "bold",
+                }}
+              >
+                <Typography style={{ fontSize: "30px", fontWeight: "800" }}>
+                  {item.item_name}
+                </Typography>
+                <Typography style={{ fontSize: "25px" }}>
                   Price: ${item.item_price}
                 </Typography>
-                <Typography variant="body2">{item.item_description}</Typography>
+                <Typography style={{ fontSize: "20px" }}>
+                  {item.item_description}
+                </Typography>
               </div>
             )}
           </div>
         </div>
+        <div style={{ padding: "10px" }}></div>
+
+        <div
+          className="main-body"
+          id="main-body"
+          style={{ gridColumn: "2", gridRow: "3" }}
+        >
+          <div
+            style={{
+              justifyContent: "center",
+              display: "flex",
+              flexDirection: "column",
+              gridColumn: "2",
+              gridRow: "2",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "center",
+              }}
+            >
+              {item && (
+                <div style={{ padding: "10px" }}>
+                  <Typography
+                    style={{
+                      fontSize: "30px",
+                      fontWeight: "800",
+                      textAlign: "center",
+                      color: "#006d77",
+                    }}
+                  >
+                    Similar Items...
+                  </Typography>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {similarItems &&
+                      similarItems !== null &&
+                      similarItems
+                        .filter(
+                          (similar) => similar && similar._id !== item._id
+                        )
+                        .map((similar, index) => (
+                          <div
+                            key={index}
+                            style={{
+                              flexBasis: "30%",
+                              marginBottom: "10px",
+                              marginRight: "1%",
+                              textAlign: "center",
+                            }}
+                          >
+                            <button
+                              className="item-body"
+                              style={{
+                                width: "100%",
+                                background: "none",
+                                border: "1px solid #add8e6",
+                                cursor: "pointer",
+                                textAlign: "center",
+                              }}
+                              onClick={() => {
+                                setSelectedItem(similar);
+                                localStorage.setItem(
+                                  "selectedItem",
+                                  JSON.stringify(similar)
+                                );
+                                console.log("Item clicked:", similar.item_name);
+                                window.location.href = "/item";
+                              }}
+                            >
+                              <div
+                                style={{ color: "#006d77", fontWeight: "bold" }}
+                              >
+                                {similar.item_name}
+                              </div>
+                              <div
+                                style={{ color: "#006d77", fontWeight: "bold" }}
+                              >
+                                Price: ${similar.item_price}
+                              </div>
+                            </button>
+                          </div>
+                        ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        <div style={{ padding: "10px" }}></div>
+
       </div>
     </Box>
   );

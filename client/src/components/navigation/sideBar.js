@@ -1,10 +1,10 @@
 import React from "react";
 import {
-  AdjustmentsVerticalIcon,
   CurrencyDollarIcon,
   HomeIcon,
   UserIcon,
-  WrenchScrewdriverIcon
+  WrenchScrewdriverIcon,
+  ShoppingCartIcon
 } from "@heroicons/react/24/outline";
 import SidebarRow from "./sideBarRow";
 import { LogoutButton } from "../buttons/logoutButton";
@@ -18,7 +18,7 @@ function Sidebar() {
   return (
     <Container className="sidebar-body">
       <div className="sidebar-row">
-        <NavLink to="/user-home" className="nav-link">
+        <NavLink to="/main" className="nav-link">
           <SidebarRow Icon={HomeIcon} title="Home" />
         </NavLink>
 
@@ -30,8 +30,8 @@ function Sidebar() {
           <SidebarRow Icon={UserIcon} title="Profile" />
         </NavLink>
 
-        <NavLink to={"/user-settings"} className="nav-link">
-          <SidebarRow Icon={AdjustmentsVerticalIcon} title="Settings" />
+        <NavLink to={"/cart"} className="nav-link">
+          <SidebarRow Icon={ShoppingCartIcon} title="Cart" />
         </NavLink>
 
         <NavLink to={"/user-repairrequests"} className="nav-link">
@@ -40,11 +40,8 @@ function Sidebar() {
 
         <LogoutButton
           onClick={() => {
-            // get the current user and logout
             if (window.confirm("Are you sure you want to logout?")) {
-              // Clean up the local storage
               localStorage.clear();
-              // see if user is truly logged out
               if (localStorage.getItem("customer") === null) {
                 console.log("User logged out successfully");
               }

@@ -11,3 +11,16 @@ export function LogoutButton(props) {
     </div>
   );
 }
+
+// import { Button } from "@mui/material";
+
+// export function LogoutButton(props) {
+//   return (
+//     <div>
+//       <Button onClick={props.onClick} style={{background: "#ffffff"}}>
+//         <span style={{ color: "#1b4965" }}>Logout</span>
+//         <ArrowLeftOnRectangleIcon style={{ color: "#1b4965" }} />
+//       </Button>
+//     </div>
+//   );
+// }
