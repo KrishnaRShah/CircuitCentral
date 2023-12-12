@@ -21,9 +21,9 @@ const orderSchema = new mongoose.Schema({
     required: true
   },
   shipping_company: {
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'ShippingCompany',
-    required: true
+    type: String,
+    required: true,
+    maxlength: 300
   },
   receipt: {
     type: String,

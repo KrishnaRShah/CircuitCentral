@@ -3,12 +3,15 @@ import { Box } from "@mui/system";
 import SearchBar from "../components/navigation/searchBar.js";
 import Sidebar from "../components/navigation/sideBar.js";
 import { Typography, Divider, Button } from "@mui/material";
-import RemoveFromCartButton from "../components/buttons/removeFromCartButton.js";
+import AddressInput from "../components/text/addressInput.js";
+import ConfirmOrderButton from "../components/buttons/confirmOrderButton.js";
 
-const CartPage = () => {
+const CheckoutPage = () => {
   const [items, setItems] = useState([]);
   const [cartData, setCartData] = useState([]);
   const [warrantyInfo, setWarrantyInfo] = useState([]);
+  const [storeInfo, setStoreInfo] = useState([]);
+  const [shippingCompanyInfo, setShippingCompanyInfo] = useState([]);
   const [isEmpty, setIsEmpty] = useState(false);
 
   useEffect(() => {
@@ -45,6 +48,26 @@ const CartPage = () => {
           const warrantyInfo = await Promise.all(warrantyPromises);
           console.log("warranty info: ", warrantyInfo);
           setWarrantyInfo(warrantyInfo);
+
+          const storePromises = customerCartData.map((cart) =>
+            fetch(`http://localhost:3001/store/${cart.store_number}`).then(
+              (response) => response.json()
+            )
+          );
+          const storeInfo = await Promise.all(storePromises);
+          console.log("store info: ", storeInfo);
+          setStoreInfo(storeInfo);
+
+          const shippingCompanyPromises = storeInfo.map((store) =>
+            fetch(
+              `http://localhost:3001/shippingcompany/${store.shipping_company}`
+            ).then((response) => response.json())
+          );
+          const shippingCompanyInfo = await Promise.all(
+            shippingCompanyPromises
+          );
+          console.log("shipping company info: ", shippingCompanyInfo);
+          setShippingCompanyInfo(shippingCompanyInfo);
         }
       } catch (error) {
         console.error("Error fetching store numbers:", error);
@@ -151,7 +174,18 @@ const CartPage = () => {
               ? `${warrantyForItem.length} Years`
               : "None";
 
+            const storeForItem = storeInfo.find(
+              (store) => cartData[index].store_number === store._id
+            );
+            console.log("storeForItem: ", storeForItem);
+            const storeAddress = storeForItem ? storeForItem.location : "";
+
             console.log("warrantyIdForItem: ", warrantyIdForItem);
+
+            const shippingCompanyForItem = shippingCompanyInfo.find(
+              (company) => storeForItem.shipping_company === company._id
+            );
+            console.log("shippingCompanyForItem: ", shippingCompanyForItem);
 
             return (
               <div key={index}>
@@ -178,38 +212,47 @@ const CartPage = () => {
                   <div style={{ color: "#006d77", fontWeight: "normal" }}>
                     Warranty Length: {warrantyLengthForItem}
                   </div>
-                  <RemoveFromCartButton
-                    cart={{
-                      _id: cartData[index]._id,
-                      item_number: cartData[index].item_number,
-                      quantity: cartData[index].quantity,
-                      store_number: cartData[index].store_number,
-                    }}
-                    warranty={warrantyIdForItem}
-                  />
+                  <div style={{ color: "#006d77", fontWeight: "normal" }}>
+                    Shipping from: {storeAddress}
+                  </div>
+                  <div style={{ color: "#006d77", fontWeight: "normal" }}>
+                    Shipping Company:{" "}
+                    {shippingCompanyForItem ? shippingCompanyForItem.name : ""}
+                  </div>
                 </div>
               </div>
             );
-          })} 
-          <Button
+          })}
+          <Divider
+            sx={{
+              mt: 1,
+              mb: 1,
+              width: "70%",
+              mx: "auto",
+            }}
+          />
+          <AddressInput />
+          <Divider
+            sx={{
+              mt: 1,
+              mb: 1,
+              width: "70%",
+              mx: "auto",
+            }}
+          />
+          <ConfirmOrderButton
             disable={isEmpty}
             variant="outlined"
             style={{
-              width: "75%",
-              height: "auto",
+              
               background: "#edf6f9",
               borderRadius: "10px",
-              borderColor: isEmpty? "grey" : "#006d77",
+              borderColor: isEmpty ? "grey" : "#006d77",
               color: isEmpty ? "grey" : "#006d77",
               padding: "10px",
               margin: "10px",
             }}
-            onClick={() => (window.location.href = "/checkout")}
-          >
-            <Typography style={{ color: "#006d77", fontWeight: "bold" }}>
-              Checkout
-            </Typography>
-          </Button>
+          />
         </div>
         <div style={{ padding: "1rem" }}></div>
       </div>
@@ -217,4 +260,4 @@ const CartPage = () => {
   );
 };
 
-export default CartPage;
+export default CheckoutPage;

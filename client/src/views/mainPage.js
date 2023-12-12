@@ -9,8 +9,6 @@ const MainPage = () => {
   const [types, setTypes] = useState([]);
   const [selectedType, setSelectedType] = useState(null);
   const [selectedItem, setSelectedItem] = useState(null);
-  //TODO: add current cart of customer to the nav bar using this:
-  //const [customer, setCustomer] = useState(JSON.parse(localStorage.getItem("customer")));
 
   const fetchItemData = () => {
     fetch("http://localhost:3001/item/all")
@@ -108,15 +106,8 @@ const MainPage = () => {
         <div
           className="main-body"
           id="main-body"
-          style={{ gridColumn: "2", gridRow: "2",  }}
+          style={{ gridColumn: "2", gridRow: "2" }}
         >
-          {/* TODO: make filter into dropdown menu
-          <DropdownMenu
-            items={items}
-            handleMonitorOption={handleMonitorOption}
-            handleMouseOption={handleMouseOption}
-            handleKeyboardOption={handleKeyboardOption}
-          /> */}
           <div
             style={{
               justifyContent: "center",
@@ -181,7 +172,10 @@ const MainPage = () => {
                       }}
                       onClick={() => {
                         setSelectedItem(item);
-                        localStorage.setItem("selectedItem", JSON.stringify(item)); 
+                        localStorage.setItem(
+                          "selectedItem",
+                          JSON.stringify(item)
+                        );
                         console.log("Item clicked:", item.item_name);
                         window.location.href = "/item";
                       }}
