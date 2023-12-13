@@ -2,7 +2,7 @@ import Sidebar from "../components/navigation/sideBar";
 import React, { useEffect, useState } from "react";
 import { Box } from "@mui/system";
 import { DateTime } from "luxon";
-import { addYears, parseISO } from "date-fns";
+import { addYears, parseISO } from 'date-fns';
 import axios from "axios";
 
 const UserRepairsPage = () => {
@@ -35,7 +35,7 @@ const UserRepairsPage = () => {
         status: "processing",
         estimated_cost: Math.floor(Math.random() * 50),
         date: new Date(),
-        store_number: "6574c6a5d54bd56b7fe830f1",
+        store_number: warranty.store_number,
         customer_id: warranty.customer_id,
         item_id: warranty.item_num,
         warranty_check: "true",
