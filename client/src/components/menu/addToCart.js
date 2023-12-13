@@ -118,6 +118,7 @@ const AddToCart = ({ item }) => {
           warranty_id,
           activation_date: Date.now(),
           length: warrantyYears,
+          store_number: selectedStore,
         })
         .then((response) => {
           console.log(response);

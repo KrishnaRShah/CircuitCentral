@@ -6,6 +6,11 @@ const warrantySchema = new mongoose.Schema({
     ref: 'Item',
     required: true
   },
+  store_number:{
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Store',
+    required: true
+  },
   customer_id:{
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Customer',
