@@ -15,6 +15,7 @@ import CartPage from './views/cartPage.js';
 import UserRepairsPage from './views/userRepairsPage.js';
 import UserOrdersPage from './views/userOrdersPage.js';
 import CheckoutPage from './views/checkoutPage.js';
+import CustomerProfile from './views/customerProfile.js';
 
 function App() {
   return (
@@ -34,7 +35,8 @@ function App() {
         <Route path="/cart" element={<CartPage /> } />
         <Route path="/user-repairrequests" element={<UserRepairsPage /> } />
         <Route path="/user-orders" element={<UserOrdersPage /> } />     
-        <Route path="/checkout" element={<CheckoutPage /> } />  
+        <Route path="/checkout" element={<CheckoutPage /> } />     
+        <Route path="/user-profile" element={<CustomerProfile /> } />  
       </Routes>
     </div>
   );
