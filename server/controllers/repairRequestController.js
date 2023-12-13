@@ -23,7 +23,6 @@ export const createRepairRequest = async (req, res) => {
   const repairRequest = req.body;
   const newRepairRequest = new RepairRequest(repairRequest);
   try {
-    console.log(newRepairRequest);
     await newRepairRequest.save();
     res.status(201).json(newRepairRequest);
   } catch (error) {
