@@ -87,7 +87,7 @@ const OwnerOrdersPage = () => {
                                     <td style={cellStyle}>{DateTime.fromISO(o.order_date).toFormat('yyyy/MM/dd')}</td>
                                     <td style={cellStyle}>{o.shipping_company}</td>
                                     <td style={cellStyle}>{o.receipt}</td>
-                                    <td style={cellStyle}>{o.order_total}</td>
+                                    <td style={cellStyle}>{o.order_total.toFixed(2)}</td>
                                   </tr>
                                 ))}
                               </tbody>
