@@ -56,7 +56,6 @@ const CustomerProfile = () => {
                         <p>Email: {customer.email}</p>
                         <p>Name: {customer.name}</p>
                         <p>Password: {customer.password}</p>
-                        <p>Username: {customer.username}</p>
                         <p>Unique_Id: {customer.unique_id}</p>
                         <p>Id: {customer._id}</p>
                         </div>
