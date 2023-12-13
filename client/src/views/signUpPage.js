@@ -87,8 +87,8 @@ const RegisterPage = () => {
         .post("http://localhost:3001/customer/", data)
         .then(function (result) {
           if (result.status === 200) {
-            localStorage.setItem("user", JSON.stringify(result.data.user));
-            const currentUser = JSON.parse(localStorage.getItem("user"));
+            localStorage.setItem("customer", JSON.stringify(result.data.user));
+            const currentUser = JSON.parse(localStorage.getItem("customer"));
             console.log(currentUser);
             window.location.href = "/home";
           }
